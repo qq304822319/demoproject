@@ -25,19 +25,23 @@ public class SysUser extends BusinessModel {
             "utf8mb4_general_ci NOT NULL COMMENT '用户名'")
     private String username;
 
+    @ApiModelProperty(value = "密码")
+    @Column(name = "password", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
+            "utf8mb4_general_ci NOT NULL COMMENT '密码'")
+    private String password;
+
     @ApiModelProperty(value = "用户真实姓名")
     @Column(name = "real_name", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
             "utf8mb4_general_ci NOT NULL COMMENT '用户真实姓名'")
     private String realName;
 
-    @ApiModelProperty(value = "性别")
-    @Column(name = "sex", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
-            "utf8mb4_general_ci NOT NULL COMMENT '性别'")
-    private String sex;
+    @ApiModelProperty(value = "用户编号")
+    @Column(name = "user_number", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
+            "utf8mb4_general_ci NOT NULL COMMENT '用户编号'")
+    private String userNumber;
 
-    @ApiModelProperty(value = "身份证号")
-    @Column(name = "id_card_no", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
-            "utf8mb4_general_ci NOT NULL COMMENT '身份证号'")
-    private String idCardNo;
-
+    @ApiModelProperty(value = "状态")
+    @Column(name = "status", columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci " +
+            "NOT NULL DEFAULT '0' COMMENT '状态 通用代码:SYS_USER_STATUS'")
+    private String status;
 }
