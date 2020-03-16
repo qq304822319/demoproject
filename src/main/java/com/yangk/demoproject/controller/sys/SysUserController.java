@@ -1,14 +1,15 @@
 package com.yangk.demoproject.controller.sys;
 
+import com.yangk.demoproject.annotation.LoginUser;
 import com.yangk.demoproject.common.utils.Response;
-import com.yangk.demoproject.model.sys.SysDataDictionary;
+import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import com.yangk.demoproject.service.sys.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,12 @@ public class SysUserController {
 
     @PostMapping("/save")
     @ApiOperation(value = "保存数据字典", notes = "保存数据字典")
-    public Response saveSysDataDictionary(@RequestBody SysUser sysUser){
-        if(StringUtils.isEmpty(sysUser.getId())){
-            sysUserService.insertSysUser(sysUser);
+    public Response saveSysDataDictionary(@RequestBody SysUser sysUser,
+                                          @LoginUser LoginUserDto loginUserDto) throws Exception {
+        if (StringUtils.isEmpty(sysUser.getId())) {
+            sysUserService.insertSysUser(sysUser, loginUserDto);
         } else {
-            sysUserService.updateSysUser(sysUser);
+            sysUserService.updateSysUser(sysUser, loginUserDto);
         }
         return Response.ok();
     }

@@ -1,13 +1,22 @@
 package com.yangk.demoproject.service.sys;
 
 
+import cn.hutool.core.util.RandomUtil;
+import com.yangk.demoproject.common.constant.ResponseCode;
+import com.yangk.demoproject.common.exception.ProException;
+import com.yangk.demoproject.config.shiro.ShiroConfig;
 import com.yangk.demoproject.dao.sys.SysUserDao;
+import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,7 +66,24 @@ public class SysUserService {
      * @date 2020/3/14
      */
     @Transactional(rollbackFor = Exception.class)
-    public String insertSysUser(SysUser sysUser) {
+    public String insertSysUser(SysUser sysUser,
+                                LoginUserDto loginUserDto) throws Exception {
+        //验证用户名
+        if (existByUserName(sysUser.getUsername())) {
+            throw new ProException(ResponseCode.USER_NAME_IS_HAVE);
+        }
+        //加密盐,6位随机数
+        sysUser.setSalt(RandomUtil.randomString(6));
+        //apache.shiro.SimpleHash 加密
+        sysUser.setPassword(new SimpleHash(
+                ShiroConfig.HASH_ALGORITHM_NAME,
+                sysUser.getPassword(),
+                ByteSource.Util.bytes(sysUser.getSalt()),
+                ShiroConfig.HASH_ITERATIONS
+        ).toHex());
+        sysUser.setCreateBy(loginUserDto.getUsername());
+        sysUser.setCreateTime(new Date());
+        //保存
         sysUserDao.insertSelective(sysUser);
         String id = sysUser.getId();
         return id;
@@ -73,7 +99,23 @@ public class SysUserService {
      * @date 2020/3/14
      */
     @Transactional(rollbackFor = Exception.class)
-    public String updateSysUser(SysUser sysUser) {
+    public String updateSysUser(SysUser sysUser,
+                                LoginUserDto loginUserDto) throws Exception {
+        //验证用户名
+        if (existByUserName(sysUser.getUsername())) {
+            throw new ProException(ResponseCode.USER_NAME_IS_HAVE);
+        }
+        //加密盐,6位随机数
+        sysUser.setSalt(RandomUtil.randomString(6));
+        sysUser.setPassword(new SimpleHash(
+                ShiroConfig.HASH_ALGORITHM_NAME,
+                sysUser.getPassword(),
+                ByteSource.Util.bytes(sysUser.getSalt()),
+                ShiroConfig.HASH_ITERATIONS
+        ).toHex());
+        sysUser.setCreateBy(loginUserDto.getUsername());
+        sysUser.setCreateTime(new Date());
+        //修改
         sysUserDao.updateByPrimaryKeySelective(sysUser);
         String id = sysUser.getId();
         return id;
@@ -95,5 +137,44 @@ public class SysUserService {
             count++;
         }
         return count;
+    }
+
+
+    /**
+     * 判断用户userName是否存在
+     *
+     * @param userName
+     * @param id
+     * @return boolean
+     * @author yangk
+     * @date 2020/3/16
+     */
+    public boolean existByUserName(String userName) {
+        SysUser param = new SysUser();
+        param.setUsername(userName);
+        List<SysUser> list = sysUserDao.select(param);
+        if (null == list || list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 通过用户名查询
+     *
+     * @param username
+     * @return com.yangk.demoproject.model.sys.SysUser
+     * @author yangk
+     * @date 2020/3/16
+     */
+    public SysUser findByUserName(String username) {
+        Example example = new Example(SysUser.class);
+        example.createCriteria().andEqualTo("username", username);
+        List<SysUser> sysUsers = sysUserDao.selectByExample(example);
+        if (null == sysUsers || sysUsers.size() == 0) {
+            throw new ProException(ResponseCode.USER_NOT_FOUND);
+        }
+        return sysUsers.get(0);
     }
 }
