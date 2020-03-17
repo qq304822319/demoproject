@@ -66,8 +66,7 @@ public class SysUserService {
      * @date 2020/3/14
      */
     @Transactional(rollbackFor = Exception.class)
-    public String insertSysUser(SysUser sysUser,
-                                LoginUserDto loginUserDto) throws Exception {
+    public String insertSysUser(SysUser sysUser) throws Exception {
         //验证用户名
         if (existByUserName(sysUser.getUsername())) {
             throw new ProException(ResponseCode.USER_NAME_IS_HAVE);
@@ -81,7 +80,7 @@ public class SysUserService {
                 ByteSource.Util.bytes(sysUser.getSalt()),
                 ShiroConfig.HASH_ITERATIONS
         ).toHex());
-        sysUser.setCreateBy(loginUserDto.getUsername());
+        sysUser.setCreateBy("admin");
         sysUser.setCreateTime(new Date());
         //保存
         sysUserDao.insertSelective(sysUser);
@@ -99,8 +98,7 @@ public class SysUserService {
      * @date 2020/3/14
      */
     @Transactional(rollbackFor = Exception.class)
-    public String updateSysUser(SysUser sysUser,
-                                LoginUserDto loginUserDto) throws Exception {
+    public String updateSysUser(SysUser sysUser) throws Exception {
         //验证用户名
         if (existByUserName(sysUser.getUsername())) {
             throw new ProException(ResponseCode.USER_NAME_IS_HAVE);
@@ -113,7 +111,7 @@ public class SysUserService {
                 ByteSource.Util.bytes(sysUser.getSalt()),
                 ShiroConfig.HASH_ITERATIONS
         ).toHex());
-        sysUser.setCreateBy(loginUserDto.getUsername());
+        sysUser.setCreateBy("admin");
         sysUser.setCreateTime(new Date());
         //修改
         sysUserDao.updateByPrimaryKeySelective(sysUser);
@@ -168,12 +166,12 @@ public class SysUserService {
      * @author yangk
      * @date 2020/3/16
      */
-    public SysUser findByUserName(String username) {
+    public SysUser findByUserName(String username){
         Example example = new Example(SysUser.class);
         example.createCriteria().andEqualTo("username", username);
         List<SysUser> sysUsers = sysUserDao.selectByExample(example);
         if (null == sysUsers || sysUsers.size() == 0) {
-            throw new ProException(ResponseCode.USER_NOT_FOUND);
+            return null;
         }
         return sysUsers.get(0);
     }

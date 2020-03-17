@@ -111,6 +111,40 @@
             <version>2.7.0</version>
         </dependency>
 
+        <!--工作流-->
+      <!--  <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter-basic</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>-->
+
+        <!-- Activiti 流程图 -->
+    <!--    <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-diagram-rest</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>
+
+        &lt;!&ndash; Activiti 在线设计 &ndash;&gt;
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-modeler</artifactId>
+            <version>${activiti.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-security-config</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        &lt;!&ndash; Activiti默认使用的是JPA &ndash;&gt;
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter-jpa</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>-->
+
         <!-- jpa -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

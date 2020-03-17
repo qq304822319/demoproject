@@ -17,6 +17,7 @@ public enum ResponseCode {
     /**
      * 登录、用户、角色相关错误信息
      */
+    LOGIN("100000", "登陆成功"),
     NOT_LOGIN("100001", "登陆信息失效"),
     INVALID_ARGUMENT("100002", "无效的参数"),
     USER_NOT_FOUND("100003", "用户未找到"),
