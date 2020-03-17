@@ -168,12 +168,12 @@ public class SysUserService {
      * @author yangk
      * @date 2020/3/16
      */
-    public SysUser findByUserName(String username) {
+    public SysUser findByUserName(String username){
         Example example = new Example(SysUser.class);
         example.createCriteria().andEqualTo("username", username);
         List<SysUser> sysUsers = sysUserDao.selectByExample(example);
         if (null == sysUsers || sysUsers.size() == 0) {
-            throw new ProException(ResponseCode.USER_NOT_FOUND);
+            return null;
         }
         return sysUsers.get(0);
     }

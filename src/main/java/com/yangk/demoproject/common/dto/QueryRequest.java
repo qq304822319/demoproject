@@ -1,4 +1,4 @@
-package com.yangk.demoproject.common.utils;
+package com.yangk.demoproject.common.dto;
 
 import lombok.Data;
 

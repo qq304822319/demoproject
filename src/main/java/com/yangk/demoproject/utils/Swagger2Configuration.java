@@ -24,7 +24,7 @@ import java.util.List;
 public class Swagger2Configuration {
 
     //api接口包扫描路径
-    public static final String SWAGGER_SCAN_BASE_PACKAGE = "com.yangk.demoproject";
+    public static final String SWAGGER_SCAN_BASE_PACKAGE = "com.yangk.demoproject.controller";
 
     public static final String VERSION = "1.0.0";
 
@@ -47,7 +47,7 @@ public class Swagger2Configuration {
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("yangk演示系统") //设置文档的标题
+                .title("yangk演示系统RESTful APIs") //设置文档的标题
                 .description("yangk演示系统 API 接口文档") // 设置文档的描述
                 .version(VERSION) // 设置文档的版本信息-> 1.0.0 Version information
                 .termsOfServiceUrl("http://localhost:8083/") // 设置文档的License信息->1.3 License information

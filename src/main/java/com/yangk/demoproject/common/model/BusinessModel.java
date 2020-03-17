@@ -18,7 +18,8 @@ import java.util.Date;
 @MappedSuperclass
 public class BusinessModel extends BaseModel {
 
-    @Column(name = "create_time", columnDefinition = "datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
+    @Column(name = "create_time", columnDefinition = "datetime NULL DEFAULT " +
+            "CURRENT_TIMESTAMP COMMENT '创建时间'")
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -29,7 +30,8 @@ public class BusinessModel extends BaseModel {
     @ApiModelProperty(value = "创建人名称")
     private String createByName;
 
-    @Column(name = "update_time", columnDefinition = "timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间' ")
+    @Column(name = "update_time", columnDefinition = "timestamp NULL DEFAULT " +
+            "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间' ")
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 

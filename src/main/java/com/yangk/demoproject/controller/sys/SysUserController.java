@@ -1,7 +1,7 @@
 package com.yangk.demoproject.controller.sys;
 
 import com.yangk.demoproject.annotation.LoginUser;
-import com.yangk.demoproject.common.utils.Response;
+import com.yangk.demoproject.common.dto.Response;
 import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import com.yangk.demoproject.service.sys.SysUserService;

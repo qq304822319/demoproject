@@ -1,6 +1,6 @@
 package com.yangk.demoproject.controller.sys;
 
-import com.yangk.demoproject.common.utils.Response;
+import com.yangk.demoproject.common.dto.Response;
 import com.yangk.demoproject.model.sys.SysDataDictionary;
 import com.yangk.demoproject.service.sys.SysDataDictionaryService;
 import io.swagger.annotations.Api;
