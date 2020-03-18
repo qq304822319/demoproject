@@ -82,12 +82,8 @@ public class SysLookupCodeService {
     public String saveSysLookupCode(SysLookupCode sysLookupCode, 
                           LoginUserDto loginUserDto) {
         if (StringUtils.isEmpty(sysLookupCode.getId())) {
-            sysLookupCode.setCreateBy(loginUserDto.getUsername());
-            sysLookupCode.setCreateTime(new Date());
             return this.insertSysLookupCode(sysLookupCode);
         } else {
-            sysLookupCode.setUpdateBy(loginUserDto.getId());
-            sysLookupCode.setUpdateTime(new Date());
             return this.updateSysLookupCode(sysLookupCode);
         }
     }

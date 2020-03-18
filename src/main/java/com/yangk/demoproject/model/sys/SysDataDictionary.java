@@ -1,5 +1,6 @@
 package com.yangk.demoproject.model.sys;
 
+import com.yangk.demoproject.common.model.BaseModel;
 import com.yangk.demoproject.common.model.BusinessModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @DynamicUpdate
 @Table(name = "sys_data_dictionary")
 @org.hibernate.annotations.Table(appliesTo = "sys_data_dictionary",comment="数据字典")
-public class SysDataDictionary extends BusinessModel {
+public class SysDataDictionary extends BaseModel {
 
     @ApiModelProperty(value = "通用代码")
     @Column(name = "lookup_type", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +

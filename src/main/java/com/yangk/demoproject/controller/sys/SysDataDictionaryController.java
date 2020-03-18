@@ -32,4 +32,6 @@ public class SysDataDictionaryController {
         List<SysDataDictionary> list = sysDataDictionaryService.selectSysDataDictionarys(sysDataDictionary);
         return Response.returnData(list);
     }
+
+
 }

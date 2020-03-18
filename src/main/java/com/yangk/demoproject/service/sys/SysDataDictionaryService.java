@@ -60,10 +60,8 @@ public class SysDataDictionaryService {
     @Transactional(rollbackFor = Exception.class)
     public String saveSysDataDictionary(SysDataDictionary sysDataDictionary) {
         if (StringUtils.isEmpty(sysDataDictionary.getId())) {
-            sysDataDictionary.setCreateTime(new Date());
             return this.insertSysDataDictionary(sysDataDictionary);
         } else {
-            sysDataDictionary.setUpdateTime(new Date());
             return this.updateSysDataDictionary(sysDataDictionary);
         }
     }
