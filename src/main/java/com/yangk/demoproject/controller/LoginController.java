@@ -3,6 +3,7 @@ package com.yangk.demoproject.controller;
 import com.yangk.demoproject.common.constant.ResponseCode;
 import com.yangk.demoproject.common.exception.ProException;
 import com.yangk.demoproject.common.dto.Response;
+import com.yangk.demoproject.common.utils.RedisUtil;
 import com.yangk.demoproject.dto.LoginDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import com.yangk.demoproject.service.sys.SysUserService;
@@ -31,6 +32,8 @@ public class LoginController {
 
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostMapping("//login")
     @ApiOperation(value = "用户登录", notes = "登录")
@@ -39,10 +42,14 @@ public class LoginController {
         //生成当前登录人的token
         UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), loginDto.getPassword());
         Subject subject = SecurityUtils.getSubject();
+
         try {
             subject.login(token);
             //根据登录的用户名/员工号获取用户信息
             SysUser sysUser = sysUserService.findByUserName(loginDto.getUsername());
+
+            redisUtil.set("username" , sysUser.getUsername());
+
             //返回登录信息
             Map<String, Object> conditions = new HashMap<>();
             conditions.put("token" , subject.getSession().getId());

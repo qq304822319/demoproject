@@ -33,5 +33,4 @@ public class SysDataDictionaryController {
         return Response.returnData(list);
     }
 
-
 }

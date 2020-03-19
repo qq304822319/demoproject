@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yangk
@@ -25,18 +26,15 @@ public class SysLookupCodeController {
     @Autowired
     private SysLookupCodeService sysLookupCodeService;
 
-    @GetMapping("/saveSysLookupCodeByPid")
-    @ApiOperation(value = "保存数据字典", notes = "保存数据字典")
-    public Response saveSysLookupCodeByPid(@RequestBody String pid,
-                                           @LoginUser LoginUserDto loginUserDto) {
-        SysLookupCode sysLookupCode = new SysLookupCode();
-        sysLookupCode.setSysDataDictionaryId(pid);
-        sysLookupCodeService.selectSysLookupCodes(sysLookupCode);
-        return Response.ok();
+    @GetMapping("/getLookupCodeList")
+    @ApiOperation(value = "获取通用代码集合", notes = "获取通用代码集合")
+    public Response selectSysLookupCodeByType(@RequestParam String lookupType) {
+        List<Map<String, Object>> maps = sysLookupCodeService.selectSysLookupCodeByType(lookupType);
+        return Response.returnData(maps);
     }
 
     @PostMapping("/saves")
-    @ApiOperation(value = "保存数据字典", notes = "保存数据字典")
+    @ApiOperation(value = "保存通用代码", notes = "保存通用代码")
     public Response saveSysLookupCodes(@RequestBody List<SysLookupCode> sysLookupCodes,
                                        @LoginUser LoginUserDto loginUserDto) {
         sysLookupCodeService.saveSysLookupCodes(sysLookupCodes, loginUserDto);

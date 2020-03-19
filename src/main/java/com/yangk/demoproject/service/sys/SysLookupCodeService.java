@@ -3,6 +3,7 @@ package com.yangk.demoproject.service.sys;
 
 import com.yangk.demoproject.dao.sys.SysLookupCodeDao;
 import com.yangk.demoproject.dto.LoginUserDto;
+import com.yangk.demoproject.model.sys.SysDataDictionary;
 import com.yangk.demoproject.model.sys.SysLookupCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +29,8 @@ public class SysLookupCodeService {
 
     @Autowired
     private SysLookupCodeDao sysLookupCodeDao;
+    @Autowired
+    private SysDataDictionaryService sysDataDictionaryService;
 
     /**
      * 查询通用代码
@@ -39,6 +42,18 @@ public class SysLookupCodeService {
      */
     public List<SysLookupCode> selectSysLookupCodes(SysLookupCode sysLookupCode){
         return sysLookupCodeDao.select(sysLookupCode);
+    }
+
+    /**
+     * 根据通用代码类型获取通用代码列表
+     *
+     * @param lookupType
+     * @return java.util.List<com.yangk.demoproject.model.sys.SysLookupCode>
+     * @author yangk
+     * @date 2020/3/18
+     */
+    public List<Map<String, Object> > selectSysLookupCodeByType(String lookupType){
+        return sysLookupCodeDao.selectSysLookupCodeByType(lookupType);
     }
 
     /**
