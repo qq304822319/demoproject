@@ -1,64 +1,38 @@
-package com.yangk.demoproject.controller.sys;
+package com.yangk.demoproject.controller.test;
 
-import com.yangk.demoproject.annotation.LoginUser;
 import com.yangk.demoproject.common.constant.ResponseCode;
-import com.yangk.demoproject.common.dto.Response;
 import com.yangk.demoproject.common.exception.ProException;
 import com.yangk.demoproject.common.utils.ExcelUtils;
 import com.yangk.demoproject.common.utils.FileUtils;
-import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import com.yangk.demoproject.service.sys.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/sysUser")
-@Api(tags = "用户接口")
-public class SysUserController {
+@Api(tags = "测试接口")
+@RequestMapping("/test")
+public class TestController {
+
     @Autowired
     private SysUserService sysUserService;
 
-    @PostMapping("/save")
-    @ApiOperation(value = "添加/修改用户", notes = "添加/修改用户")
-    public Response saveSysDataDictionary(@RequestBody SysUser sysUser) throws Exception {
-        if (StringUtils.isEmpty(sysUser.getId())) {
-            sysUserService.insertSysUser(sysUser);
-        } else {
-            sysUserService.updateSysUser(sysUser);
-        }
-        return Response.ok();
-    }
 
-    @PostMapping("/getSysUsers")
-    @ApiOperation(value = "查询所有用户", notes = "查询所有用户")
-    public Response getSysUsers(@RequestBody SysUser sysUser){
-        List<SysUser> list = sysUserService.selectSysUsers(sysUser);
-        return Response.returnData(list);
-    }
-
-
-    @PostMapping("/export")
+    @GetMapping("/export")
     @ApiOperation(value = "导出报表", notes = "导出报表")
-    public void  export(@RequestBody SysUser params, HttpServletResponse response) throws Exception {
+    public void  export(HttpServletResponse response) throws Exception {
 
         //获取数据, 需要具体修改
-        List<SysUser> list = sysUserService.selectSysUsers(params);
+        List<SysUser> list = sysUserService.selectSysUsers(new SysUser());
 
         //excel标题
         String[] title = {"员工姓名", "登录名", "工号"};
@@ -109,5 +83,4 @@ public class SysUserController {
             e.printStackTrace();
         }
     }
-
 }

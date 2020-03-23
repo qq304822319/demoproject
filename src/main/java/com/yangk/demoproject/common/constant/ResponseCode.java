@@ -15,7 +15,7 @@ public enum ResponseCode {
     ERROR("-1", "系统繁忙，此时请开发者稍候再试"),
 
     /**
-     * 登录、用户、角色相关错误信息
+     * 登录、用户、角色相关信息
      */
     LOGIN("100000", "登陆成功"),
     NOT_LOGIN("100001", "登陆信息失效"),
@@ -29,13 +29,14 @@ public enum ResponseCode {
     ROLE_NAME_IS_HAVE("100006", "角色名称已被占用"),
 
     /**
-     * 上传相关错误信息
+     * 文件相关信息
      **/
     FILES_NOT_FOUND("200001", "附件未找到"),
     FILES_PATH_NOT_FOUND("200002", "上传目录不可为空"),
+    FILES_NOT_TYPE("200003", "文件类型错误"),
 
     /**
-     * 工作流相关错误信息
+     * 工作流相关信息
      **/
     FLOW_MODEL_KEY_IS_EXIST("300001", "工作流模型KEY已存在"),
     FLOW_MODEL_NOT_FOUND("300001", "工作流模型未找到"),
@@ -48,12 +49,8 @@ public enum ResponseCode {
     /**
      * 报表模板信息
      */
-    REPORT_TEMPLATE_NOT_EXIST("500001", "报表模板不存在"),
+    REPORT_TEMPLATE_NOT_EXIST("400001", "报表模板不存在");
 
-    /**
-     * 业务订单相关错误信息
-     */
-    ORDER_NO_NOT_FOUND("400001", "未传入订单编号");
 
     private String code;
     private String desc;

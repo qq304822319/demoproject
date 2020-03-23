@@ -65,6 +65,7 @@ public class ShiroConfiguration extends ShiroConfig {
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/logout", "anon");
         filterChainDefinitionMap.put("/sysUser/**", "anon");
+        filterChainDefinitionMap.put("/test/**", "anon");
 
 
         //activiti设计
