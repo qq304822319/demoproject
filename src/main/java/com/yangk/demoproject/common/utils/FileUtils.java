@@ -3,7 +3,8 @@ package com.yangk.demoproject.common.utils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 

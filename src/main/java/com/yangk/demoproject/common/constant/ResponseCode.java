@@ -34,6 +34,9 @@ public enum ResponseCode {
     FILES_NOT_FOUND("200001", "附件未找到"),
     FILES_PATH_NOT_FOUND("200002", "上传目录不可为空"),
     FILES_NOT_TYPE("200003", "文件类型错误"),
+    EXCEL_NOT_TYPE("200003", "Excel类型错误,只能识别.xlsx或者.xls类型的Excel文件"),
+    EXCEL_IS_NULL("200004", "Excel工作薄为空"),
+
 
     /**
      * 工作流相关信息

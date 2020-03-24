@@ -1,8 +1,8 @@
 package com.yangk.demoproject.controller;
 
 import com.yangk.demoproject.common.constant.ResponseCode;
-import com.yangk.demoproject.common.exception.ProException;
 import com.yangk.demoproject.common.dto.Response;
+import com.yangk.demoproject.common.exception.ProException;
 import com.yangk.demoproject.common.utils.RedisUtil;
 import com.yangk.demoproject.dto.LoginDto;
 import com.yangk.demoproject.model.sys.SysUser;
@@ -14,7 +14,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,10 +38,10 @@ public class LoginController {
     @Autowired
     private RedisUtil redisUtil;
 
-    @PostMapping("//login")
+    @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "登录")
     public Response getVehicleAccidentInfos(@RequestBody @Valid LoginDto loginDto,
-                                          HttpServletRequest request) throws Exception{
+                                            HttpServletRequest request) throws Exception {
         //生成当前登录人的token
         UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), loginDto.getPassword());
         Subject subject = SecurityUtils.getSubject();
@@ -48,13 +51,13 @@ public class LoginController {
             //根据登录的用户名/员工号获取用户信息
             SysUser sysUser = sysUserService.findByUserName(loginDto.getUsername());
 
-            redisUtil.set("username" , sysUser.getUsername());
+            redisUtil.set("username", sysUser.getUsername());
 
             //返回登录信息
             Map<String, Object> conditions = new HashMap<>();
-            conditions.put("token" , subject.getSession().getId());
-            conditions.put("realName" , sysUser.getRealName());
-            conditions.put("userNumber" , sysUser.getUserNumber());
+            conditions.put("token", subject.getSession().getId());
+            conditions.put("realName", sysUser.getRealName());
+            conditions.put("userNumber", sysUser.getUserNumber());
             return Response.returnData(ResponseCode.LOGIN, conditions);
         } catch (UnknownAccountException uae) {
             log.debug("对用户[{}]进行登录验证..验证未通过,未知账户", loginDto.getUsername());
