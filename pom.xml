@@ -40,10 +40,17 @@
         </dependency>
 
         <!-- 数据库集成 mysql -->
-        <dependency>
+        <!--<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+        </dependency>-->
+
+        <!-- 数据库集成 mysql 8.0 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
         </dependency>
 
         <!-- mybatis -->
@@ -129,20 +136,20 @@
         </dependency>
 
         <!--工作流-->
-      <!--  <dependency>
+        <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-spring-boot-starter-basic</artifactId>
             <version>${activiti.version}</version>
-        </dependency>-->
+        </dependency>
 
         <!-- Activiti 流程图 -->
-    <!--    <dependency>
+        <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-diagram-rest</artifactId>
             <version>${activiti.version}</version>
         </dependency>
 
-        &lt;!&ndash; Activiti 在线设计 &ndash;&gt;
+        <!-- Activiti 在线设计 -->
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-modeler</artifactId>
@@ -155,8 +162,8 @@
             </exclusions>
         </dependency>
 
-        &lt;!&ndash; Activiti默认使用的是JPA &ndash;&gt;
-        <dependency>
+        <!-- Activiti默认使用的是JPA -->
+        <!--<dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-spring-boot-starter-jpa</artifactId>
             <version>${activiti.version}</version>

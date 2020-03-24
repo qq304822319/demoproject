@@ -8,6 +8,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableSwagger2
 @MapperScan("com.yangk.demoproject.dao.**")
 @SpringBootApplication(exclude = {
+        org.activiti.spring.boot.SecurityAutoConfiguration.class,
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class})
 public class DemoprojectApplication {
 
