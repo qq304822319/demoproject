@@ -12,12 +12,10 @@
  */
 package com.yangk.demoproject.controller.workflow.model.main;
 
+import com.yangk.demoproject.common.dto.Response;
 import org.activiti.engine.ActivitiException;
 import org.apache.commons.io.IOUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.InputStream;
@@ -43,4 +41,10 @@ public class StencilsetRestController {
             throw new ActivitiException("Error while loading stencil set", e);
         }
     }
+
+    @GetMapping(value = "/images/{images}")
+    public Response getImages(@PathVariable String images) {
+        return Response.ok();
+    }
+
 }

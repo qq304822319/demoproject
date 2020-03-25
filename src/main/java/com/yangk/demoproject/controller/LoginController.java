@@ -91,6 +91,6 @@ public class LoginController {
 
     @GetMapping("/login/page")
     public Response loginPage() {
-        throw new ProException(ResponseCode.NOT_LOGIN);
+        return Response.ok();
     }
 }

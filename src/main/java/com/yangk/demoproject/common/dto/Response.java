@@ -67,7 +67,7 @@ public class Response {
     }
 
     public static Response returnData(Object data, long total, int pageNumber, int pageSize) {
-        return returnData(data, (int) total, pageNumber, pageSize);
+        return new Response(data, (int) total, pageNumber, pageSize);
     }
 
 }

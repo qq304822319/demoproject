@@ -63,6 +63,7 @@ public class ShiroConfiguration extends ShiroConfig {
 
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/login/page", "anon");
         filterChainDefinitionMap.put("/logout", "anon");
         filterChainDefinitionMap.put("/sysUser/**", "anon");
         filterChainDefinitionMap.put("/test/**", "anon");
