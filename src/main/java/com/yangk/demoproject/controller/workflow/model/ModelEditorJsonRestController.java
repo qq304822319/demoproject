@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 展示流程图
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author yangk
  * @date 2020/3/24
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/activiti")
 public class ModelEditorJsonRestController implements ModelDataJsonConstants {

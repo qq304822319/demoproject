@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,6 +38,7 @@ import java.io.InputStream;
  * @author yangk
  * @date 2020/3/24
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/activiti")
 public class ModelSaveRestController implements ModelDataJsonConstants {

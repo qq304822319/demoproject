@@ -28,6 +28,7 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.activiti.image.ProcessDiagramGenerator;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -110,6 +111,7 @@ public class FlowTaskController {
         return Response.returnData(list, page.getTotal(), page.getPageNum(), page.getPageSize());
     }
 
+    @ApiIgnore
     @GetMapping("/claim/{taskId}")
     @ApiOperation(value = "任务签收", notes = "任务签收接口")
     public Response claim(@LoginUser LoginUserDto loginUserDto, @PathVariable String taskId) {
@@ -117,6 +119,7 @@ public class FlowTaskController {
         return Response.ok();
     }
 
+    @ApiIgnore
     @GetMapping("/delegate")
     @ApiOperation(value = "任务委托", notes = "任务委托接口")
     public Response delegate(@LoginUser LoginUserDto loginUserDto,
@@ -162,6 +165,7 @@ public class FlowTaskController {
         }
     }
 
+    @ApiIgnore
     @GetMapping("/queryProHighLighted")
     @ApiOperation(value = "生成高亮流程图", notes = "任务生成高亮流程图接口")
     public void queryProHighLighted(String processInstanceId) throws Exception {

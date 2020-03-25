@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.InputStream;
 
@@ -27,6 +28,7 @@ import java.io.InputStream;
  * @author yangk
  * @date 2020/3/24
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/activiti")
 public class StencilsetRestController {
