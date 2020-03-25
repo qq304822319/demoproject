@@ -43,6 +43,11 @@ public class SysUser extends BusinessModel {
             "utf8mb4_general_ci NOT NULL COMMENT '加密盐'")
     private String salt;
 
+    @ApiModelProperty(value = "主要角色id")
+    @Column(name = "sys_role_id", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
+            "utf8mb4_general_ci NULL DEFAULT NULL COMMENT '主要角色id'")
+    private String sysRoleId;
+
     @ApiModelProperty(value = "状态")
     @Column(name = "status", columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci " +
             "NOT NULL DEFAULT '0' COMMENT '状态 通用代码:SYS_USER_STATUS'")

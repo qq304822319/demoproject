@@ -3,17 +3,13 @@ package com.yangk.demoproject.service.sys;
 
 import com.yangk.demoproject.dao.sys.SysLookupCodeDao;
 import com.yangk.demoproject.dto.LoginUserDto;
-import com.yangk.demoproject.model.sys.SysDataDictionary;
 import com.yangk.demoproject.model.sys.SysLookupCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.tree.VoidDescriptor;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +36,7 @@ public class SysLookupCodeService {
      * @author yangk
      * @date dateString
      */
-    public List<SysLookupCode> selectSysLookupCodes(SysLookupCode sysLookupCode){
+    public List<SysLookupCode> selectSysLookupCodes(SysLookupCode sysLookupCode) {
         return sysLookupCodeDao.select(sysLookupCode);
     }
 
@@ -52,7 +48,7 @@ public class SysLookupCodeService {
      * @author yangk
      * @date 2020/3/18
      */
-    public List<Map<String, Object> > selectSysLookupCodeByType(String lookupType){
+    public List<Map<String, Object>> selectSysLookupCodeByType(String lookupType) {
         return sysLookupCodeDao.selectSysLookupCodeByType(lookupType);
     }
 
@@ -64,7 +60,7 @@ public class SysLookupCodeService {
      * @author yangk
      * @date dateString
      */
-    public SysLookupCode selectSysLookupCodeByPrimaryKey(Object key){
+    public SysLookupCode selectSysLookupCodeByPrimaryKey(Object key) {
         return sysLookupCodeDao.selectByPrimaryKey(key);
     }
 
@@ -72,14 +68,14 @@ public class SysLookupCodeService {
      * 批量保存通用代码
      *
      * @param sysLookupCodes
-	 * @param loginUserDto
+     * @param loginUserDto
      * @return void
      * @author yangk
      * @date 2020/3/18
      */
     @Transactional(rollbackFor = Exception.class)
     public void saveSysLookupCodes(List<SysLookupCode> sysLookupCodes,
-                                   LoginUserDto loginUserDto){
+                                   LoginUserDto loginUserDto) {
         for (SysLookupCode sysLookupCode : sysLookupCodes) {
             this.saveSysLookupCode(sysLookupCode, loginUserDto);
         }
@@ -94,15 +90,15 @@ public class SysLookupCodeService {
      * @date dateString
      */
     @Transactional(rollbackFor = Exception.class)
-    public String saveSysLookupCode(SysLookupCode sysLookupCode, 
-                          LoginUserDto loginUserDto) {
+    public String saveSysLookupCode(SysLookupCode sysLookupCode,
+                                    LoginUserDto loginUserDto) {
         if (StringUtils.isEmpty(sysLookupCode.getId())) {
             return this.insertSysLookupCode(sysLookupCode);
         } else {
             return this.updateSysLookupCode(sysLookupCode);
         }
     }
-    
+
     /**
      * 新增通用代码
      *
@@ -113,7 +109,7 @@ public class SysLookupCodeService {
      * @date dateString
      */
     @Transactional(rollbackFor = Exception.class)
-    public String insertSysLookupCode(SysLookupCode sysLookupCode){
+    public String insertSysLookupCode(SysLookupCode sysLookupCode) {
         sysLookupCodeDao.insertSelective(sysLookupCode);
         String id = sysLookupCode.getId();
         return id;
@@ -129,7 +125,7 @@ public class SysLookupCodeService {
      * @date dateString
      */
     @Transactional(rollbackFor = Exception.class)
-    public String updateSysLookupCode(SysLookupCode sysLookupCode){
+    public String updateSysLookupCode(SysLookupCode sysLookupCode) {
         sysLookupCodeDao.updateByPrimaryKeySelective(sysLookupCode);
         String id = sysLookupCode.getId();
         return id;
@@ -144,7 +140,7 @@ public class SysLookupCodeService {
      * @date dateString
      */
     @Transactional(rollbackFor = Exception.class)
-    public int deleteSysLookupCode(Object[] keys){
+    public int deleteSysLookupCode(Object[] keys) {
         int count = 0;
         for (Object key : keys) {
             sysLookupCodeDao.deleteByPrimaryKey(key);

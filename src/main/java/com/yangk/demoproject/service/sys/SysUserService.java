@@ -6,7 +6,6 @@ import com.yangk.demoproject.common.constant.ResponseCode;
 import com.yangk.demoproject.common.exception.ProException;
 import com.yangk.demoproject.config.shiro.ShiroConfig;
 import com.yangk.demoproject.dao.sys.SysUserDao;
-import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.hash.SimpleHash;

@@ -51,7 +51,7 @@ public class ShiroConfiguration extends ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         //配置跳过Shiro验证的url
         filterChainDefinitionMap.put("*.js", "anon");
@@ -66,6 +66,8 @@ public class ShiroConfiguration extends ShiroConfig {
         filterChainDefinitionMap.put("/logout", "anon");
         filterChainDefinitionMap.put("/sysUser/**", "anon");
         filterChainDefinitionMap.put("/test/**", "anon");
+        filterChainDefinitionMap.put("/workflow/**", "anon");
+        filterChainDefinitionMap.put("/activiti/**", "anon");
 
 
         //activiti设计

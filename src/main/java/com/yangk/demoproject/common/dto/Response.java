@@ -15,6 +15,9 @@ public class Response {
     private String code;
     private String msg;
     private Object data;
+    private int totalCount;
+    private int pageNumber;   //页数
+    private int pageSize;     //每页大小
 
     public Response() {
         this.code = ResponseCode.OK.getCode();
@@ -38,6 +41,15 @@ public class Response {
         this.data = data;
     }
 
+    public Response(Object t, int totalCount, int pageNumber, int pageSize) {
+        this.code = ResponseCode.OK.getCode();
+        this.msg = ResponseCode.OK.getDesc();
+        this.data = t;
+        this.pageNumber = pageNumber;
+        this.totalCount = totalCount;
+        this.pageSize = pageSize;
+    }
+
     public String toString() {
         return "Response [code=" + this.code + ", msg=" + this.msg + ", data=" + this.data;
     }
@@ -52,6 +64,10 @@ public class Response {
 
     public static Response returnData(ResponseCode responseCode, Object data) {
         return new Response(responseCode, data);
+    }
+
+    public static Response returnData(Object data, long total, int pageNumber, int pageSize) {
+        return returnData(data, (int) total, pageNumber, pageSize);
     }
 
 }

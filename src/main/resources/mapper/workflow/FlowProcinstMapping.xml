@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangk.demoproject.dao.workflow.FlowProcinstDao">
+
+    <!-- 查询所有流程实例 -->
+    <select id="selectProcinst" parameterType="map" resultType="com.yangk.demoproject.dto.workflow">
+        SELECT AHP.ID_ AS id,
+        AHP.PROC_DEF_ID_ AS proc_def_id,
+        ARP.NAME_ AS flow_name,
+        ARP.KEY_ AS flow_key,
+        ARP.VERSION_ AS version,
+        AHP.BUSINESS_KEY_ AS business_key,
+        AHP.START_TIME_ AS start_time,
+        AHP.END_TIME_ AS end_time,
+        AHP.DURATION_ AS duration,
+        AHP.DELETE_REASON_ AS delete_reason,
+        AHP.START_USER_ID_ AS start_user_id,
+        SU.REAL_NAME AS start_user_real_name,
+        SU.USERNAME AS start_username,
+        ARE_.IS_ACTIVE_ AS is_active,
+        ARE_.IS_CONCURRENT_ AS is_concurrent,
+        ARE_.SUSPENSION_STATE_ AS suspension_state
+        FROM ACT_HI_PROCINST AHP
+        LEFT JOIN SYS_USER SU ON AHP.START_USER_ID_ = SU.ID
+        LEFT JOIN ACT_RE_PROCDEF ARP ON AHP.PROC_DEF_ID_ = ARP.ID_
+        LEFT JOIN ACT_RU_EXECUTION ARE_ ON AHP.PROC_INST_ID_ = ARE_.PROC_INST_ID_
+        ORDER BY AHP.START_TIME_ DESC
+    </select>
+
+</mapper>
