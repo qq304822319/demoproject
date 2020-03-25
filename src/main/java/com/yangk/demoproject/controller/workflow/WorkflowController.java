@@ -1,4 +1,4 @@
-package com.yangk.demoproject.controller.workflow.flow;
+package com.yangk.demoproject.controller.workflow;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,8 +33,19 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/workflow")
-@Api(tags = "工作流接口")
+@Api(tags = "工作流主接口")
 public class WorkflowController {
+
+    /*
+     * 流程使用说明:
+     *      1. 流程模型保存: POST /workflow/save  返回流程 modelId
+     *      2. 设计流程图: http://localhost:8083/activiti/modeler.html?modelId=modelId
+     *      3. 流程图保存 ------ 设计器保存按钮
+     *      4. 部署流程: POST /workflow/deploy/{modelId}
+     *
+     *
+     *
+     */
 
     @Autowired
     private WorkflowService workflowService;
