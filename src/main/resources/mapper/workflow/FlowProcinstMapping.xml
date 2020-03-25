@@ -3,7 +3,8 @@
 <mapper namespace="com.yangk.demoproject.dao.workflow.FlowProcinstDao">
 
     <!-- 查询所有流程实例 -->
-    <select id="selectProcinst" parameterType="map" resultType="com.yangk.demoproject.dto.workflow">
+    <select id="selectProcinst" parameterType="map"
+            resultType="com.yangk.demoproject.dto.workflow.WorkflowDto">
         SELECT AHP.ID_ AS id,
         AHP.PROC_DEF_ID_ AS proc_def_id,
         ARP.NAME_ AS flow_name,
