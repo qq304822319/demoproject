@@ -6,6 +6,7 @@ import com.yangk.demoproject.common.constant.ResponseCode;
 import com.yangk.demoproject.common.exception.ProException;
 import com.yangk.demoproject.config.shiro.ShiroConfig;
 import com.yangk.demoproject.dao.sys.SysUserDao;
+import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -30,6 +31,8 @@ public class SysUserService {
 
     @Autowired
     private SysUserDao sysUserDao;
+    @Autowired
+    private SysAutoCodeService sysAutoCodeService;
 
     /**
      * 查询用户
@@ -65,9 +68,10 @@ public class SysUserService {
      * @date 2020/3/14
      */
     @Transactional(rollbackFor = Exception.class)
-    public String insertSysUser(SysUser sysUser) throws Exception {
+    public String insertSysUser(SysUser sysUser,
+                                LoginUserDto loginUserDto) throws Exception {
         //验证用户名
-        if (existByUserName(sysUser.getUsername())) {
+        if (existByUserName(sysUser)) {
             throw new ProException(ResponseCode.USER_NAME_IS_HAVE);
         }
         //加密盐,6位随机数
@@ -79,7 +83,8 @@ public class SysUserService {
                 ByteSource.Util.bytes(sysUser.getSalt()),
                 ShiroConfig.HASH_ITERATIONS
         ).toHex());
-        sysUser.setCreateBy("admin");
+        sysUser.setUserNumber(sysAutoCodeService.getAutoCode("SYS_USER_NO"));
+        sysUser.setCreateBy(loginUserDto.getId());
         sysUser.setCreateTime(new Date());
         //保存
         sysUserDao.insertSelective(sysUser);
@@ -97,9 +102,10 @@ public class SysUserService {
      * @date 2020/3/14
      */
     @Transactional(rollbackFor = Exception.class)
-    public String updateSysUser(SysUser sysUser) throws Exception {
+    public String updateSysUser(SysUser sysUser,
+                                LoginUserDto loginUserDto) throws Exception {
         //验证用户名
-        if (existByUserName(sysUser.getUsername())) {
+        if (existByUserName(sysUser)) {
             throw new ProException(ResponseCode.USER_NAME_IS_HAVE);
         }
         //加密盐,6位随机数
@@ -110,7 +116,7 @@ public class SysUserService {
                 ByteSource.Util.bytes(sysUser.getSalt()),
                 ShiroConfig.HASH_ITERATIONS
         ).toHex());
-        sysUser.setCreateBy("admin");
+        sysUser.setCreateBy(loginUserDto.getId());
         sysUser.setCreateTime(new Date());
         //修改
         sysUserDao.updateByPrimaryKeySelective(sysUser);
@@ -146,15 +152,12 @@ public class SysUserService {
      * @author yangk
      * @date 2020/3/16
      */
-    public boolean existByUserName(String userName) {
-        SysUser param = new SysUser();
-        param.setUsername(userName);
-        List<SysUser> list = sysUserDao.select(param);
-        if (null == list || list.size() == 0) {
+    public boolean existByUserName(SysUser sysUser) {
+        int count = sysUserDao.countByUserName(sysUser);
+        if(count == 0){
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     /**

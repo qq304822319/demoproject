@@ -1,6 +1,8 @@
 package com.yangk.demoproject.controller.sys;
 
+import com.yangk.demoproject.annotation.LoginUser;
 import com.yangk.demoproject.common.dto.Response;
+import com.yangk.demoproject.dto.LoginUserDto;
 import com.yangk.demoproject.model.sys.SysUser;
 import com.yangk.demoproject.service.sys.SysUserService;
 import io.swagger.annotations.Api;
@@ -25,11 +27,12 @@ public class SysUserController {
 
     @PostMapping("/save")
     @ApiOperation(value = "添加/修改用户", notes = "添加/修改用户")
-    public Response saveSysDataDictionary(@RequestBody SysUser sysUser) throws Exception {
+    public Response saveSysDataDictionary(@RequestBody SysUser sysUser,
+                                          @LoginUser LoginUserDto loginUserDto) throws Exception {
         if (StringUtils.isEmpty(sysUser.getId())) {
-            sysUserService.insertSysUser(sysUser);
+            sysUserService.insertSysUser(sysUser, loginUserDto);
         } else {
-            sysUserService.updateSysUser(sysUser);
+            sysUserService.updateSysUser(sysUser, loginUserDto);
         }
         return Response.ok();
     }

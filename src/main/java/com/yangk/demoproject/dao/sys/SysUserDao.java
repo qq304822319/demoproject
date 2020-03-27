@@ -11,4 +11,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysUserDao extends TkMybatisMapper<SysUser> {
 
+    /**
+     * 查询用户名是否存在
+     *
+     * @param sysUser
+     * @return int
+     * @author yangk
+     * @date 2020/3/27
+     */
+    int countByUserName(SysUser sysUser);
 }
