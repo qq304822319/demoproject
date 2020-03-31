@@ -1,10 +1,22 @@
 package com.yangk.demoproject.common.utils;
 
+import com.yangk.demoproject.common.constant.ResponseCode;
+import com.yangk.demoproject.common.dto.FileDto;
+import com.yangk.demoproject.common.exception.ProException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -121,6 +133,59 @@ public class FileUtils {
         return result.toString();
     }
 
+
+    /**
+     * 文件图片
+     *
+     * @param path          目录
+     * @param multipartFile 待上传的文件
+     * @return com.yangk.demoproject.common.dto.FileDto
+     * @author yangk
+     * @date 2020/3/31
+     */
+    public static FileDto uploadImage(String path, MultipartFile multipartFile) throws IOException, URISyntaxException {
+        if (fileIsEmpty(multipartFile)) {
+            throw new ProException(ResponseCode.FILES_NOT_FOUND);
+        }
+
+        if (path.startsWith("/")) {
+            path.replaceFirst("/", "");
+        }
+        if (!path.endsWith("/")) {
+            path = path + "/";
+        }
+        //系统静态文件目录 + 自定义目录 + 年月
+        URI uri = new URI(ResourceUtils.getURL("classpath:").getPath() + "static/upload/" + path);
+        String staticPath = uri.getPath();
+        File directory = new File(staticPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        //获取后缀
+        String suffix = getSuffix(multipartFile.getOriginalFilename());
+        String imageName = createFileName(suffix);
+        File file = new File(directory.getAbsolutePath() + File.separator + imageName);
+        //保存文件
+        multipartFile.transferTo(file);
+
+        //访问路径
+        String url = "/upload/" + path + imageName;
+
+        FileDto imageDto = new FileDto();
+
+        BufferedImage bufferedImage = ImageIO.read(file);
+        imageDto.setName(imageName);
+        imageDto.setUrl(url);
+        if (bufferedImage != null) {
+            imageDto.setWidth(bufferedImage.getWidth());
+            imageDto.setHeight(bufferedImage.getHeight());
+        }
+        imageDto.setSize(multipartFile.getSize());
+        imageDto.setSuffix(suffix);
+
+        return imageDto;
+    }
+
     /***********************************private****************************************/
 
 
@@ -129,6 +194,7 @@ public class FileUtils {
      *
      * @param number 缩进次数。
      * @return 指定缩进次数的字符串。
+     * @author yangk
      */
     private static String indent(int number) {
         StringBuffer result = new StringBuffer();
@@ -138,6 +204,41 @@ public class FileUtils {
         return result.toString();
     }
 
+    /**
+     * 判断附件是否存在
+     *
+     * @param multipartFile
+     * @return boolean
+     * @author yangk
+     * @date 2020/3/31
+     */
+    private static boolean fileIsEmpty(MultipartFile multipartFile) {
+        if (multipartFile == null)
+            return true;
+        if (multipartFile.isEmpty())
+            return true;
+        return false;
+    }
+
+    /**
+     * 获取后缀
+     */
+    public static String getSuffix(String fileName) {
+        if (StringUtils.isEmpty(fileName))
+            return null;
+        if (!fileName.contains("."))
+            return null;
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    /**
+     * 根据后缀 重命名
+     */
+    public static String createFileName(String suffix) {
+        if (StringUtils.isEmpty(suffix))
+            return null;
+        return UUID.randomUUID().toString() + "." + suffix;
+    }
 
     /**
      * 压缩方法

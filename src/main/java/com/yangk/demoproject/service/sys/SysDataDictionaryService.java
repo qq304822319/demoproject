@@ -78,8 +78,7 @@ public class SysDataDictionaryService {
     @Transactional(rollbackFor = Exception.class)
     public String insertSysDataDictionary(SysDataDictionary sysDataDictionary) {
         sysDataDictionaryDao.insertSelective(sysDataDictionary);
-        String id = sysDataDictionary.getId();
-        return id;
+        return sysDataDictionary.getId();
     }
 
     /**
@@ -94,8 +93,7 @@ public class SysDataDictionaryService {
     @Transactional(rollbackFor = Exception.class)
     public String updateSysDataDictionary(SysDataDictionary sysDataDictionary) {
         sysDataDictionaryDao.updateByPrimaryKeySelective(sysDataDictionary);
-        String id = sysDataDictionary.getId();
-        return id;
+        return sysDataDictionary.getId();
     }
 
     /**

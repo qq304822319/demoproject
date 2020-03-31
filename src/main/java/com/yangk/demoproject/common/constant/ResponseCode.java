@@ -52,22 +52,27 @@ public enum ResponseCode {
     /**
      * 报表模板信息
      */
-    REPORT_TEMPLATE_NOT_EXIST("400001", "报表模板不存在");
+    REPORT_TEMPLATE_NOT_EXIST("400001", "报表模板不存在"),
+
+    /**
+     * 数据信息
+     */
+    DATA_VERSION_EXPIRED("500001", "数据失效,请重新修改");
 
 
     private String code;
-    private String desc;
+    private String info;
 
-    ResponseCode(String code, String desc) {
+    ResponseCode(String code, String info) {
         this.code = code;
-        this.desc = desc;
+        this.info = info;
     }
 
     public String getCode() {
         return this.code;
     }
 
-    public String getDesc() {
-        return this.desc;
+    public String getInfo() {
+        return this.info;
     }
 }

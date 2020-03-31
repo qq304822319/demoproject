@@ -14,7 +14,7 @@ public class ProException extends RuntimeException {
 
     public ProException(ResponseCode code) {
         this.code = code.getCode();
-        this.msg = code.getDesc();
+        this.msg = code.getInfo();
     }
 
     public ProException(ResponseCode code, String msg) {

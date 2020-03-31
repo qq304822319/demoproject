@@ -1,7 +1,6 @@
 package com.yangk.demoproject.common.dto;
 
 import com.yangk.demoproject.common.constant.ResponseCode;
-import com.yangk.demoproject.model.sys.SysUser;
 import lombok.Data;
 
 /**
@@ -12,46 +11,35 @@ import lombok.Data;
 @Data
 public class Response {
 
-    private String code;
-    private String msg;
-    private Object data;
-    private int totalCount;
-    private int pageNumber;   //页数
-    private int pageSize;     //每页大小
+    protected String code;
+    protected String info;
+    protected Object data;
+
 
     public Response() {
         this.code = ResponseCode.OK.getCode();
-        this.msg = ResponseCode.OK.getDesc();
+        this.info = ResponseCode.OK.getInfo();
     }
 
-    public Response(String code, String msg) {
+    public Response(String code, String info) {
         this.code = code;
-        this.msg = msg;
+        this.info = info;
     }
 
     public Response(Object data) {
         this.code = ResponseCode.OK.getCode();
-        this.msg = ResponseCode.OK.getDesc();
+        this.info = ResponseCode.OK.getInfo();
         this.data = data;
     }
 
     public Response(ResponseCode responseCode, Object data) {
         this.code = responseCode.getCode();
-        this.msg = responseCode.getDesc();
+        this.info = responseCode.getInfo();
         this.data = data;
     }
 
-    public Response(Object t, int totalCount, int pageNumber, int pageSize) {
-        this.code = ResponseCode.OK.getCode();
-        this.msg = ResponseCode.OK.getDesc();
-        this.data = t;
-        this.pageNumber = pageNumber;
-        this.totalCount = totalCount;
-        this.pageSize = pageSize;
-    }
-
     public String toString() {
-        return "Response [code=" + this.code + ", msg=" + this.msg + ", data=" + this.data;
+        return "Response [code=" + this.code + ", info=" + this.info + ", data=" + this.data;
     }
 
     public static Response ok() {
@@ -66,8 +54,36 @@ public class Response {
         return new Response(responseCode, data);
     }
 
-    public static Response returnData(Object data, long total, int pageNumber, int pageSize) {
-        return new Response(data, (int) total, pageNumber, pageSize);
+    public static PagaData returnData(Object data, long total, int pageNumber, int pageSize) {
+        return new PagaData(data, (int) total, pageNumber, pageSize);
     }
 
+
+    public static Response error() {
+        return new Response(ResponseCode.ERROR);
+    }
+
+    public static Response error(String msg) {
+        return new Response(ResponseCode.ERROR, msg);
+    }
+
+    public static Response error(String code, String msg) {
+        return new Response(code, msg);
+    }
+
+}
+
+class PagaData extends Response {
+    private int totalCount;   //总条数
+    private int pageNumber;   //页数
+    private int pageSize;     //每页大小
+
+    public PagaData(Object t, int totalCount, int pageNumber, int pageSize) {
+        this.code = ResponseCode.OK.getCode();
+        this.info = ResponseCode.OK.getInfo();
+        this.data = t;
+        this.pageNumber = pageNumber;
+        this.totalCount = totalCount;
+        this.pageSize = pageSize;
+    }
 }

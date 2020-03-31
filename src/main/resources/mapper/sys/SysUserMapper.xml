@@ -13,7 +13,7 @@
                 AND t1.id != #{id}
             </if>
             <if test="username != null and username!=''">
-                AND t1.username != #{username}
+                AND t1.username = #{username}
             </if>
         </where>
     </select>

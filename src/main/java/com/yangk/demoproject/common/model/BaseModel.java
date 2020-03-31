@@ -1,8 +1,10 @@
 package com.yangk.demoproject.common.model;
 
 import com.yangk.demoproject.common.model.base.UUIdGenId;
+import io.swagger.annotations.ApiModelProperty;
 import tk.mybatis.mapper.annotation.KeySql;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;

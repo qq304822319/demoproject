@@ -88,8 +88,7 @@ public class SysUserService {
         sysUser.setCreateTime(new Date());
         //保存
         sysUserDao.insertSelective(sysUser);
-        String id = sysUser.getId();
-        return id;
+        return sysUser.getId();
     }
 
     /**
@@ -116,11 +115,29 @@ public class SysUserService {
                 ByteSource.Util.bytes(sysUser.getSalt()),
                 ShiroConfig.HASH_ITERATIONS
         ).toHex());
-        sysUser.setCreateBy(loginUserDto.getId());
-        sysUser.setCreateTime(new Date());
-        //修改
-        sysUserDao.updateByPrimaryKeySelective(sysUser);
+        sysUser.setUpdateBy(loginUserDto.getId());
+        sysUser.setUpdateTime(new Date());
+
+        /**
+         * 根据version修改当前数据
+         */
+        Example example = new Example(SysUser.class);
+        int version = sysUser.getVersion();
         String id = sysUser.getId();
+        example.createCriteria()
+                .andEqualTo("id", id)
+                .andEqualTo("version", version);
+
+        //迭代版本号
+        sysUser.setVersion(version + 1);
+
+        int result = sysUserDao.updateByExampleSelective(sysUser, example);
+
+        if(result == 0){
+            log.error("SysUser.id(" + id + ")数据版本失效,当前版本: " + version);
+            throw new ProException(ResponseCode.DATA_VERSION_EXPIRED);
+        }
+
         return id;
     }
 

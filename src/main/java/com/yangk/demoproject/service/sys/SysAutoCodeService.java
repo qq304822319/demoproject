@@ -81,8 +81,7 @@ public class SysAutoCodeService {
     @Transactional(rollbackFor = Exception.class)
     public String insertSysAutoCode(SysAutoCode sysAutoCode){
         sysAutoCodeDao.insertSelective(sysAutoCode);
-        String id = sysAutoCode.getId();
-        return id;
+        return sysAutoCode.getId();
     }
 
     /**
@@ -96,8 +95,7 @@ public class SysAutoCodeService {
     @Transactional(rollbackFor = Exception.class)
     public String updateSysAutoCode(SysAutoCode sysAutoCode){
         sysAutoCodeDao.updateByPrimaryKeySelective(sysAutoCode);
-        String id = sysAutoCode.getId();
-        return id;
+        return sysAutoCode.getId();
     }
 
     /**

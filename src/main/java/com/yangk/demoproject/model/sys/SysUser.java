@@ -9,6 +9,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -18,11 +22,13 @@ import javax.persistence.Table;
 @org.hibernate.annotations.Table(appliesTo = "sys_user", comment = "系统用户表")
 public class SysUser extends BusinessModel {
 
+    @Size(min = 3, max = 20, message = "用户名长度在6~20之间")
     @ApiModelProperty(value = "用户名")
     @Column(name = "username", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
             "utf8mb4_general_ci NOT NULL COMMENT '用户名'")
     private String username;
 
+    @Size(min = 3, max = 20, message = "密码长度在6~20之间")
     @ApiModelProperty(value = "密码")
     @Column(name = "password", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
             "utf8mb4_general_ci NOT NULL COMMENT '密码'")

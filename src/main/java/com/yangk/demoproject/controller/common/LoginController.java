@@ -1,4 +1,4 @@
-package com.yangk.demoproject.controller;
+package com.yangk.demoproject.controller.common;
 
 import com.yangk.demoproject.common.constant.ResponseCode;
 import com.yangk.demoproject.common.dto.Response;
@@ -54,11 +54,11 @@ public class LoginController {
             redisUtils.set("username", sysUser.getUsername());
 
             //返回登录信息
-            Map<String, Object> conditions = new HashMap<>();
-            conditions.put("token", subject.getSession().getId());
-            conditions.put("realName", sysUser.getRealName());
-            conditions.put("userNumber", sysUser.getUserNumber());
-            return Response.returnData(ResponseCode.LOGIN, conditions);
+            Map<String, Object> info = new HashMap<>();
+            info.put("token", subject.getSession().getId());
+            info.put("realName", sysUser.getRealName());
+            info.put("userNumber", sysUser.getUserNumber());
+            return Response.returnData(ResponseCode.LOGIN, info);
         } catch (UnknownAccountException uae) {
             log.debug("对用户[{}]进行登录验证..验证未通过,未知账户", loginDto.getUsername());
             token.clear();

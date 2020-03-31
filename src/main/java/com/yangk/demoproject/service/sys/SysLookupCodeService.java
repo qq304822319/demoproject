@@ -111,8 +111,7 @@ public class SysLookupCodeService {
     @Transactional(rollbackFor = Exception.class)
     public String insertSysLookupCode(SysLookupCode sysLookupCode) {
         sysLookupCodeDao.insertSelective(sysLookupCode);
-        String id = sysLookupCode.getId();
-        return id;
+        return sysLookupCode.getId();
     }
 
     /**
@@ -127,8 +126,7 @@ public class SysLookupCodeService {
     @Transactional(rollbackFor = Exception.class)
     public String updateSysLookupCode(SysLookupCode sysLookupCode) {
         sysLookupCodeDao.updateByPrimaryKeySelective(sysLookupCode);
-        String id = sysLookupCode.getId();
-        return id;
+        return sysLookupCode.getId();
     }
 
     /**

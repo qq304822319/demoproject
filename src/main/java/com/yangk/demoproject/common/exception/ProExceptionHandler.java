@@ -1,7 +1,7 @@
 package com.yangk.demoproject.common.exception;
 
 import com.yangk.demoproject.common.constant.ResponseCode;
-import com.yangk.demoproject.common.dto.ErrorInfo;
+import com.yangk.demoproject.common.dto.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.pam.UnsupportedTokenException;
@@ -56,8 +56,8 @@ public class ProExceptionHandler implements ErrorController {
     @ResponseBody
     @ExceptionHandler(value = {ProException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorInfo handleException(ProException exception) {
-        return ErrorInfo.error(exception.getCode(), exception.getMsg());
+    public Response handleException(ProException exception) {
+        return Response.error(exception.getCode(), exception.getMsg());
     }
 
     /**
@@ -67,9 +67,9 @@ public class ProExceptionHandler implements ErrorController {
      * @return
      */
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ErrorInfo methodArgumentNotValidException(MethodArgumentNotValidException exception) {
+    public Response methodArgumentNotValidException(MethodArgumentNotValidException exception) {
         String msg = Objects.requireNonNull(exception.getBindingResult().getFieldError()).getDefaultMessage();
-        return ErrorInfo.error(ResponseCode.INVALID_ARGUMENT.getCode(), msg);
+        return Response.error(ResponseCode.INVALID_ARGUMENT.getCode(), msg);
     }
 
     /**
@@ -83,74 +83,74 @@ public class ProExceptionHandler implements ErrorController {
     @RequestMapping(value = ERROR_PATH)
     @ResponseBody
     @ExceptionHandler(value = {Exception.class})
-    public ErrorInfo error(HttpServletRequest request, Exception ex, final WebRequest req) {
+    public Response error(HttpServletRequest request, Exception ex, final WebRequest req) {
         log.error("--------------------------ERROR  START...------------------------------------");
         ex.printStackTrace();
         log.error("--------------------------ERROR  END...------------------------------------");
 
         if (ex instanceof UnsupportedTokenException) {
-            return ErrorInfo.error("100001", "身份认证失败");
+            return Response.error("100001", "身份认证失败");
         }
 
         if (ex instanceof UnknownAccountException) {
-            return ErrorInfo.error("100002", "该用户不存在");
+            return Response.error("100002", "该用户不存在");
         }
 
         if (ex instanceof IncorrectCredentialsException) {
-            return ErrorInfo.error("100004", "密码错误");
+            return Response.error("100004", "密码错误");
         }
 
         if (ex instanceof LockedAccountException) {
-            return ErrorInfo.error("100003", "登录失败，账号被锁定");
+            return Response.error("100003", "登录失败，账号被锁定");
         }
 
         if (ex instanceof DisabledAccountException) {
-            return ErrorInfo.error("100003", "登录失败，账号被禁用");
+            return Response.error("100003", "登录失败，账号被禁用");
         }
 
         if (ex instanceof ExcessiveAttemptsException) {
-            return ErrorInfo.error("100003", "登录次数过多，请过段时间再来");
+            return Response.error("100003", "登录次数过多，请过段时间再来");
         }
 
         if (ex instanceof ConcurrentAccessException) {
-            return ErrorInfo.error("100003", "该账户已在别处登录");
+            return Response.error("100003", "该账户已在别处登录");
         }
 
         if (ex instanceof AccountException) {
-            return ErrorInfo.error("100003", "账户异常");
+            return Response.error("100003", "账户异常");
         }
 
         if (ex instanceof ExpiredCredentialsException) {
-            return ErrorInfo.error("100001", "登陆信息失效");
+            return Response.error("100001", "登陆信息失效");
         }
 
         if (ex instanceof UnauthorizedException || ex instanceof HostUnauthorizedException) {
-            return ErrorInfo.error("100005", "没有访问权限");
+            return Response.error("100005", "没有访问权限");
         }
 
         if (ex instanceof HttpRequestMethodNotSupportedException) {
-            return ErrorInfo.error("100006", "请求方式不正确");
+            return Response.error("100006", "请求方式不正确");
         }
 
         if (ex instanceof MissingServletRequestParameterException) {
-            return ErrorInfo.error("100007", "参数不正确");
+            return Response.error("100007", "参数不正确");
         }
 
         if (ex instanceof TypeMismatchException) {
-            return ErrorInfo.error("100008", "参数类型不正确");
+            return Response.error("100008", "参数类型不正确");
         }
 
         if (ex instanceof DataFormatException) {
-            return ErrorInfo.error("100009", "数据格式不正确");
+            return Response.error("100009", "数据格式不正确");
         }
 
         if (ex instanceof IllegalArgumentException) {
-            return ErrorInfo.error("100010", "非法参数");
+            return Response.error("100010", "非法参数");
         }
 
         int status = getStatus(request);
         Map<String, Object> attr = this.errorAttributes.getErrorAttributes(req, false);
-        return ErrorInfo.error("" + status, String.valueOf(attr.getOrDefault("message", "error")));
+        return Response.error("" + status, String.valueOf(attr.getOrDefault("message", "error")));
     }
 
     private int getStatus(HttpServletRequest request) {

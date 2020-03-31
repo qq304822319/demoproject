@@ -1,6 +1,7 @@
 package com.yangk.demoproject.controller.test;
 
 import com.alibaba.fastjson.JSON;
+import com.yangk.demoproject.common.dto.Response;
 import com.yangk.demoproject.common.utils.ExcelUtils;
 import com.yangk.demoproject.common.utils.FileUtils;
 import com.yangk.demoproject.model.sys.SysUser;
@@ -76,4 +77,11 @@ public class TestController {
         String s = JSON.toJSONString(map);
         System.out.print(s);
     }
+
+    @GetMapping("/test")
+    @ApiOperation(value = "导出Excel", notes = "导出Excel")
+    public Response test(HttpServletResponse response) throws Exception {
+        return Response.ok();
+    }
+
 }

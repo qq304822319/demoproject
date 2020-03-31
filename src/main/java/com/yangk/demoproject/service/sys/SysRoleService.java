@@ -77,8 +77,7 @@ public class SysRoleService {
     @Transactional(rollbackFor = Exception.class)
     public String insertSysRole(SysRole sysRole) {
         sysRoleDao.insertSelective(sysRole);
-        String id = sysRole.getId();
-        return id;
+        return sysRole.getId();
     }
 
     /**
@@ -92,8 +91,7 @@ public class SysRoleService {
     @Transactional(rollbackFor = Exception.class)
     public String updateSysRole(SysRole sysRole) {
         sysRoleDao.updateByPrimaryKeySelective(sysRole);
-        String id = sysRole.getId();
-        return id;
+        return sysRole.getId();
     }
 
     /**

@@ -23,8 +23,10 @@ public class BusinessModel extends BaseModel {
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @Column(name = "create_by")
+
     @ApiModelProperty(value = "创建人")
+    @Column(name = "create_by", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
+            "utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人'")
     private String createBy;
     @Transient
     @ApiModelProperty(value = "创建人名称")
@@ -35,11 +37,16 @@ public class BusinessModel extends BaseModel {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
-    @Column(name = "update_by")
     @ApiModelProperty(value = "修改人")
+    @Column(name = "update_by", columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE " +
+            "utf8mb4_general_ci NULL DEFAULT NULL COMMENT '修改人'")
     private String updateBy;
     @Transient
     @ApiModelProperty(value = "修改人名称")
     private String updateByName;
+
+    @ApiModelProperty(value = "乐观锁")
+    @Column(name = "version", columnDefinition = "int(11) NOT NULL DEFAULT 0 COMMENT '版本号'")
+    private Integer version;
 
 }
