@@ -36,3 +36,8 @@ __________________
 
 > > 1. mysql数据库实例
     2. redis-server
+
+> * 其他功能
+> > > 1. MD5加密
+> > > 2. AES加密
+> > > 3. 自定义token（json web token）
