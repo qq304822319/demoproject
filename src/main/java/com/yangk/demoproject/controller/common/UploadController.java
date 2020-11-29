@@ -90,7 +90,9 @@ public class UploadController {
         path += Name;
         File excelFile = new File(path);
 
+        //上传excel保存到excelFile
         multipartFile.transferTo(excelFile);
+
         FileInputStream inputStream = new FileInputStream(excelFile);
         Map<String, List<List<Object>>> map = ExcelUtils.importExcelToMap(inputStream, path);
         String s = JSON.toJSONString(map);
