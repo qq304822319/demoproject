@@ -1,5 +1,6 @@
 package com.yangk.demoproject.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -14,6 +15,7 @@ import java.security.spec.InvalidParameterSpecException;
  * @author yangk
  * @date 2020/11/22
  */
+@Slf4j
 public class AesCbcUtil {
 
     public static final String KEY_ALGORITHM = "AES";
@@ -172,7 +174,7 @@ public class AesCbcUtil {
             data = AesCbcUtil.decrypt(data, key);
             System.out.println("解密后：" + new String(data));
         } catch (Exception e) {
-
+            log.error("AES error");
         }
 
     }
