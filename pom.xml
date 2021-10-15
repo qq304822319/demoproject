@@ -24,6 +24,7 @@
         <java.version>1.8</java.version>
         <hutool.version>4.5.16</hutool.version>
         <activiti.version>5.22.0</activiti.version>
+        <jacoco.version>0.8.3</jacoco.version>
     </properties>
 
     <dependencies>
@@ -209,13 +210,13 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.6</version>
+            <version>4.5</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.2.1</version>
+            <version>4.4.1</version>
         </dependency>
 
         <!-- hutool 糊涂 -->
@@ -307,6 +308,35 @@
                         <version>1.3.2</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <!-- jacoco 扫描 unit test 覆盖率 -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <!-- 配置扫描 -->
+                    <includes>
+                        <include>com/yangk/demoproject/service/**</include>
+                        <include>com/yangk/demoproject/controller/**</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
